@@ -1,11 +1,11 @@
 package tests;
 
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import pages.calculatorButtons;
+import pages.searchPage;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class tests {
 
     private static WebDriver driver;
+    private static searchPage searchPage;
+    private static calculatorButtons calculatorButtons;
 
     @BeforeAll
     public static void init() {
@@ -20,6 +22,8 @@ public class tests {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         driver = new ChromeDriver(options);
+        searchPage = new searchPage(driver);
+        calculatorButtons = new calculatorButtons(driver);
     }
 
     @BeforeEach
@@ -30,49 +34,49 @@ public class tests {
     @Test
     @DisplayName("Кейс 1. Проверка операций с целыми числами")
     public void test1() {
-        driver.findElement(By.cssSelector("input.gLFyf.gsfi")).sendKeys("Калькулятор", Keys.ENTER);
-        driver.findElement(By.cssSelector("#search div [jsname='j93WEe']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='N10B9']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='XSr6wc']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='lVjWed']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='qCp9A']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='YovRWb']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='KN1kY']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='pPHzQc']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='xAP7E']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='bkEvMb']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='WxTTNd']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='Ax5wH']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='Pt8tGc']")).click();
+        searchPage.search("Калькулятор");
+        calculatorButtons.buttonLeftParenthesis.click();
+        calculatorButtons.buttonOne.click();
+        calculatorButtons.buttonPlus.click();
+        calculatorButtons.buttonTwo.click();
+        calculatorButtons.buttonRightParenthesis.click();
+        calculatorButtons.buttonMultiply.click();
+        calculatorButtons.buttonThree.click();
+        calculatorButtons.buttonMinus.click();
+        calculatorButtons.buttonFour.click();
+        calculatorButtons.buttonZero.click();
+        calculatorButtons.buttonDivide.click();
+        calculatorButtons.buttonFive.click();
+        calculatorButtons.buttonEquals.click();
         assertAll(
-                () -> assertEquals("(1 + 2) × 3 - 40 ÷ 5 =", driver.findElement(By.cssSelector("#search div [jsname='ubtiRe']")).getText()),
-                () -> assertEquals("1", driver.findElement(By.cssSelector("#search div [jsname='VssY5c']")).getText())
+                () -> assertEquals("(1 + 2) × 3 - 40 ÷ 5 =", searchPage.inputFormula.getText()),
+                () -> assertEquals("1", searchPage.result.getText())
         );
     }
 
     @Test
     @DisplayName("Кейс 2. Проверка деления на ноль")
     public void test2() {
-        driver.findElement(By.cssSelector("input.gLFyf.gsfi")).sendKeys("Калькулятор", Keys.ENTER);
-        driver.findElement(By.cssSelector("#search div [jsname='abcgof']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='WxTTNd']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='bkEvMb']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='Pt8tGc']")).click();
+        searchPage.search("Калькулятор");
+        calculatorButtons.buttonSix.click();
+        calculatorButtons.buttonDivide.click();
+        calculatorButtons.buttonZero.click();
+        calculatorButtons.buttonEquals.click();
         assertAll(
-                () -> assertEquals("6 ÷ 0 =", driver.findElement(By.cssSelector("#search div [jsname='ubtiRe']")).getText()),
-                () -> assertEquals("Infinity", driver.findElement(By.cssSelector("#search div [jsname='VssY5c']")).getText())
+                () -> assertEquals("6 ÷ 0 =", searchPage.inputFormula.getText()),
+                () -> assertEquals("Infinity", searchPage.result.getText())
         );
     }
 
     @Test
     @DisplayName("Кейс 3. Проверка ошибки при отсутствии значения")
     public void test3() {
-        driver.findElement(By.cssSelector("input.gLFyf.gsfi")).sendKeys("Калькулятор", Keys.ENTER);
-        driver.findElement(By.cssSelector("#search div [jsname='aN1RFf']")).click();
-        driver.findElement(By.cssSelector("#search div [jsname='Pt8tGc']")).click();
+        searchPage.search("Калькулятор");
+        calculatorButtons.buttonSin.click();
+        calculatorButtons.buttonEquals.click();
         assertAll(
-                () -> assertEquals("sin() =", driver.findElement(By.cssSelector("#search div [jsname='ubtiRe']")).getText()),
-                () -> assertEquals("Error", driver.findElement(By.cssSelector("#search div [jsname='VssY5c']")).getText())
+                () -> assertEquals("sin() =", searchPage.inputFormula.getText()),
+                () -> assertEquals("Error", searchPage.result.getText())
         );
     }
 
