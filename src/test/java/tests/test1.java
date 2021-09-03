@@ -42,8 +42,6 @@ public class test1 {
         driver.findElement(By.cssSelector("div [jsname='Pt8tGc']")).click();
         assertEquals("(1 + 2) × 3 - 40 ÷ 5 =", driver.findElement(By.cssSelector("div [jsname='ubtiRe']")).getText());
         assertEquals("1", driver.findElement(By.cssSelector("div [jsname='VssY5c']")).getText());
-
-
     }
 
     @Test
@@ -56,8 +54,16 @@ public class test1 {
         driver.findElement(By.cssSelector("div [jsname='Pt8tGc']")).click();
         assertEquals("6 ÷ 0 =", driver.findElement(By.cssSelector("div [jsname='ubtiRe']")).getText());
         assertEquals("Infinity", driver.findElement(By.cssSelector("div [jsname='VssY5c']")).getText());
+    }
 
-
+    @Test
+    public void test3() {
+        driver.get("http://google.com");
+        driver.findElement(By.cssSelector("input.gLFyf.gsfi")).sendKeys("Калькулятор", Keys.ENTER);
+        driver.findElement(By.cssSelector("div [jsname='aN1RFf']")).click();
+        driver.findElement(By.cssSelector("div [jsname='Pt8tGc']")).click();
+        assertEquals("sin() =", driver.findElement(By.cssSelector("div [jsname='ubtiRe']")).getText());
+        assertEquals("Error", driver.findElement(By.cssSelector("div [jsname='VssY5c']")).getText());
     }
 
     @AfterAll
