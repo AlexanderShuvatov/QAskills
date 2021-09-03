@@ -46,6 +46,20 @@ public class test1 {
 
     }
 
+    @Test
+    public void test2() {
+        driver.get("http://google.com");
+        driver.findElement(By.cssSelector("input.gLFyf.gsfi")).sendKeys("Калькулятор", Keys.ENTER);
+        driver.findElement(By.cssSelector("div [jsname='abcgof']")).click();
+        driver.findElement(By.cssSelector("div [jsname='WxTTNd']")).click();
+        driver.findElement(By.cssSelector("div [jsname='bkEvMb']")).click();
+        driver.findElement(By.cssSelector("div [jsname='Pt8tGc']")).click();
+        assertEquals("6 ÷ 0 =", driver.findElement(By.cssSelector("div [jsname='ubtiRe']")).getText());
+        assertEquals("Infinity", driver.findElement(By.cssSelector("div [jsname='VssY5c']")).getText());
+
+
+    }
+
     @AfterAll
     public static void quit() {
         driver.quit();
